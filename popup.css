@@ -124,6 +124,14 @@
   border-radius: 15px;
 }
 
+#tabLogo{
+  max-width: 22px;
+}
+
+.websitelogo{
+  width: -webkit-fill-available;
+}
+
 .text{
   font-family: 'Helvetica';
   font-weight: lighter;
@@ -133,6 +141,7 @@
 
 .text:hover{
   transform: scale(1.1); 
+  transition-duration: 0.3s;
 }
 
 .delete{
@@ -149,9 +158,9 @@
 }
 .clearall{
 display: flex;
-justify-content: flex-end;
+justify-content:space-between;
 margin-right: 8px;
-margin-top: 25px;
+padding-bottom: 15px ;
 }
 
 .button-36 {
@@ -176,8 +185,13 @@ margin-top: 25px;
   touch-action: manipulation;
 }
 
+.button2{
+  margin-left: 13px;
+}
+
 .button-36:hover {
   box-shadow: rgba(80, 63, 205, 0.5) 0 1px 30px;
+  transform: scale(1.1); 
   transition-duration: .1s;
 }
 
