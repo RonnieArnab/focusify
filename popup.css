@@ -138,9 +138,20 @@
   color: #000080;
   cursor: pointer;
 }
+.tabTitle{
+  font-family: 'Helvetica';
+  font-weight: lighter;
+  color: #000080;
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis;
+}
+.tabTitleDiv{
+  max-width: 70%;
+}
 
 .text:hover{
-  transform: scale(1.1); 
+  transform: scale(1.05); 
   transition-duration: 0.3s;
 }
 
@@ -159,6 +170,12 @@
 .clearall{
 display: flex;
 justify-content:space-between;
+margin-right: 8px;
+padding-bottom: 15px ;
+}
+.clearallPage1{
+  display: flex;
+justify-content:end;
 margin-right: 8px;
 padding-bottom: 15px ;
 }
@@ -201,6 +218,21 @@ padding-bottom: 15px ;
   }
 }
 
+#page2{
+  display: none;
+}
+#message{
+  display: none;
+  justify-content: center;
+  font-family: 'Helvetica';
+  animation: fadeIn 2s;
+}
+
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
 
 
 
