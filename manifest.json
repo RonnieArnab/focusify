@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "name": "Focusify",
   "version": "0.1.0",
   "description": "Saving Bookmarks in Chrome",
@@ -23,6 +24,22 @@
       }
     }
   },
+=======
+  "name": "My YT Bookmarks",
+  "version": "0.1.0",
+  "description": "Saving timestamps in YT videos",
+  "permissions": ["storage", "tabs"],
+  "host_permissions": ["https://*.youtube.com/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.youtube.com/*"],
+      "js": ["contentScript.js"]
+    }
+  ],
+>>>>>>> a4f9cfa891e6e48974ee92bb2a7687642189faf6
   "web_accessible_resources": [
     {
       "resources": [
@@ -40,9 +57,16 @@
       "24": "assets/ext-icon.png",
       "32": "assets/ext-icon.png"
     },
+<<<<<<< HEAD
     "default_title": "Focusify",
     "default_popup": "popup.html"
   },
+=======
+    "default_title": "My YT Bookmarks",
+    "default_popup": "popup.html"
+  },
+
+>>>>>>> a4f9cfa891e6e48974ee92bb2a7687642189faf6
   "manifest_version": 3
 }
 
