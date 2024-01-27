@@ -1,3 +1,14 @@
+const options = {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+  hour: "numeric",
+  minute: "numeric",
+  hour12: true,
+};
+
+const formatter = new Intl.DateTimeFormat("en-US", options);
+
 const setDatatoStorage = () => {
   chrome.windows.getAll({ populate: true }, (windows) => {
     const timestamp = new Date().getTime();
@@ -64,38 +75,84 @@ const focusify = () => {
 // });
 
 document.addEventListener("DOMContentLoaded", () => {
-  const focusBtns = document.getElementsByClassName("focus");
-  const bookmarkContainer = document.getElementById("bookmarks");
+  const focusBtns = document.getElementsByClassName("button-86");
+  const clearAllBtn = document.querySelector(".button-36");
+  const deleteButtons = document.querySelectorAll(".delete");
+  const openAllButton = document.getElementById("openallbutton");
+  const bookmarkContainer = document.getElementsByClassName("body");
 
-  for (const focusBtn of focusBtns) {
-    focusBtn.addEventListener("click", focusify);
-  }
+  const clearAll = () => {
+    console.log("Clear All button clicked!");
+  };
+
+  const deleteBookmark = () => {
+    console.log("Delete button clicked!");
+  };
+
+  const openAllBookmarks = () => {
+    console.log("Open All button clicked!");
+  };
 
   chrome.storage.sync.get(null, (data) => {
-    console.log(data);
     if (Object.keys(data).length > 0) {
       for (const timestamp in data) {
         const windowData = data[timestamp];
 
         const bookmarkDiv = document.createElement("div");
-        bookmarkDiv.innerHTML = `${timestamp}`;
-        bookmarkContainer.appendChild(bookmarkDiv);
+        bookmarkDiv.id = "Outerdiv";
+        bookmarkDiv.className = "web";
 
-        const reloadButton = document.createElement("button");
-        reloadButton.innerText = `Reload ${timestamp}`;
-        reloadButton.addEventListener(
-          "click",
-          reloadWindowsFromData(windowData)
-        );
-        bookmarkContainer.appendChild(reloadButton);
+        const date = document.createElement("div");
+        date.className = "date";
 
-        Object.keys(windowData).map((window) => {
-          windowData[window].map((tab) => {
-            const subBookmakDiv = document.createElement("div");
-            subBookmakDiv.innerHTML = `<p>${tab.title}</p>`;
-            bookmarkContainer.appendChild(subBookmakDiv);
-          });
-        });
+        const label = document.createElement("h3");
+        label.className = "text";
+
+        label.innerText = `${Date(timestamp)}`;
+
+        date.appendChild(label);
+        // Create innerbutton container
+        const innerButtonContainer = document.createElement("div");
+        innerButtonContainer.className = "innerbutton";
+
+        // Create delete button
+        const deleteButton = document.createElement("button");
+        deleteButton.className = "delete";
+        deleteButton.setAttribute("role", "button");
+        deleteButton.id = "deletebutton";
+
+        // Create delete icon
+        const deleteIcon = document.createElement("i");
+        deleteIcon.className = "fa-solid fa-trash";
+        deleteIcon.style.fontSize = "17px";
+
+        // Append delete icon to delete button
+        deleteButton.appendChild(deleteIcon);
+
+        // Append delete button to innerbutton container
+        innerButtonContainer.appendChild(deleteButton);
+
+        // Create openall button
+        const openAllButton = document.createElement("button");
+        openAllButton.className = "delete";
+        openAllButton.setAttribute("role", "button");
+        openAllButton.id = "openallbutton";
+
+        // Create openall icon
+        const openAllIcon = document.createElement("i");
+        openAllIcon.className = "fa-solid fa-arrow-up-right-from-square";
+        openAllIcon.style.fontSize = "17px";
+
+        // Append openall icon to openall button
+        openAllButton.appendChild(openAllIcon);
+
+        // Append openall button to innerbutton container
+        innerButtonContainer.appendChild(openAllButton);
+
+        bookmarkDiv.appendChild(date);
+        bookmarkDiv.appendChild(innerButtonContainer);
+
+        document.getElementById("body").appendChild(bookmarkDiv);
       }
     } else {
       const noBookmarksMessage = document.createElement("div");
@@ -103,6 +160,18 @@ document.addEventListener("DOMContentLoaded", () => {
       bookmarkContainer.appendChild(noBookmarksMessage);
     }
   });
+
+  for (const focusBtn of focusBtns) {
+    focusBtn.addEventListener("click", focusify);
+  }
+
+  clearAllBtn.addEventListener("click", clearAll);
+
+  for (const deleteButton of deleteButtons) {
+    deleteButton.addEventListener("click", deleteBookmark);
+  }
+
+  openAllButton.addEventListener("click", openAllBookmarks);
 });
 
 const reloadWindowsFromData = (windowData) => {
@@ -118,9 +187,9 @@ const reloadWindowsFromData = (windowData) => {
 
       console.log(urlsToOpen);
 
-      // chrome.windows.create({
-      //   url: urlsToOpen,
-      // });
+      chrome.windows.create({
+        url: urlsToOpen,
+      });
     } else {
       console.log("No tabs found in the specified windowData.");
     }
